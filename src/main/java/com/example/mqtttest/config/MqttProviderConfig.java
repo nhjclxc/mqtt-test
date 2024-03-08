@@ -4,10 +4,13 @@ import com.example.mqtttest.producer.MqttProviderCallBack;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.integration.mqtt.core.DefaultMqttPahoClientFactory;
+import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 
 @Configuration
 @Slf4j
@@ -78,6 +81,23 @@ public class MqttProviderConfig {
         } catch (MqttException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * setCleanSession 用于设置时候每次连接上去都是一个新的会话
+     *
+     * @return
+     */
+    @Bean
+    public MqttPahoClientFactory factory() {
+        DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setUserName(username);
+        options.setPassword(password.toCharArray());
+        options.setCleanSession(false);
+        options.setServerURIs(hostUrl.split(","));
+        factory.setConnectionOptions(options);
+        return factory;
     }
 
     public void publish(int qos, boolean retained, String topic, String message) {

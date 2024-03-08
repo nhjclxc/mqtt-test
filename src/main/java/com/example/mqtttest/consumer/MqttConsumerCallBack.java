@@ -19,10 +19,10 @@ public class MqttConsumerCallBack implements MqttCallback{
      */
     @Override
     public void messageArrived(String topic, MqttMessage message) throws Exception {
-        System.out.println(String.format("接收消息主题 : %s",topic));
-        System.out.println(String.format("接收消息Qos : %d",message.getQos()));
-        System.out.println(String.format("接收消息内容 : %s",new String(message.getPayload())));
-        System.out.println(String.format("接收消息retained : %b",message.isRetained()));
+        System.out.println(String.format("Consumer 接收消息主题 : %s",topic));
+        System.out.println(String.format("Consumer 接收消息Qos : %d",message.getQos()));
+        System.out.println(String.format("Consumer 接收消息内容 : %s",new String(message.getPayload())));
+        System.out.println(String.format("Consumer 接收消息retained : %b",message.isRetained()));
     }
 
     /**
