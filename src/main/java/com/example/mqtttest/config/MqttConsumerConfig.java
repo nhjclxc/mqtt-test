@@ -9,6 +9,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Arrays;
+
 @Configuration
 public class MqttConsumerConfig {
     @Value("${spring.mqtt.username}")
@@ -26,6 +28,8 @@ public class MqttConsumerConfig {
  
     @Value("${spring.mqtt.default.topic}")
     private String defaultTopic;
+    @Value("${spring.mqtt.default.qos}")
+    private String qos;
  
     /**
      * 客户端对象
@@ -69,11 +73,13 @@ public class MqttConsumerConfig {
             client.connect(options);
             //订阅主题
             //消息等级，和主题数组一一对应，服务端将按照指定等级给订阅了主题的客户端推送消息
-            int[] qos = {1,1};
+            int[] q = Arrays.stream(qos.split(",")).mapToInt(Integer::valueOf).toArray();
+//            int[] qos = {1,1};
             //主题
-            String[] topics = {"topic1","topic2"};
+            String[] topics = defaultTopic.split(","); //{"topic1","topic2"};
+//            String[] topics = {"topic1","topic2"};
             //订阅主题
-            client.subscribe(topics,qos);
+            client.subscribe(topics,q);
         } catch (MqttException e) {
             e.printStackTrace();
         }
