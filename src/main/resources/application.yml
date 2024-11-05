@@ -1,19 +1,35 @@
+
 spring:
   application:
     name: provider
-    #MQTT配置信息
+  profiles:
+    active: dev
+  #MQTT配置信息
   mqtt:
     #MQTT服务地址，端口号默认1883，如果有多个，用逗号隔开, 注意控制台的端口是18083,代码端口是1883
-    url: tcp://106.14.142.184:1883
+    url: tcp://47.96.150.227:1883
     #用户名
     username: admin
     #密码
-    password: public
-    #客户端id(不能重复)
-    client:
-      id: provider-id
-    #MQTT默认的消息推送主题，实际可在调用接口是指定
-    default:
-      # topic数量要和qos相同
-      topic: topic1,topic2,topic3
-      qos: 2,2,2
+    password: adminhkkj123
+    cleansession: false
+    timeout: 1000
+    keepalive: 10
+    connectionTimeout: 3000
+
+#    #MQTT配置信息
+#  mqtt:
+#    #MQTT服务地址，端口号默认1883，如果有多个，用逗号隔开, 注意控制台的端口是18083,代码端口是1883
+#    url: tcp://106.14.142.184:1883
+#    #用户名
+#    username: admin
+#    #密码
+#    password: public
+#    #客户端id(不能重复)
+#    client:
+#      id: provider-id
+#    #MQTT默认的消息推送主题，实际可在调用接口是指定
+#    default:
+#      # topic数量要和qos相同
+#      topic: topic1,topic2,topic3
+#      qos: 2,2,2
