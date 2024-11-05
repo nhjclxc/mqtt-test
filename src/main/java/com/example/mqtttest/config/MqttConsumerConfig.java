@@ -18,19 +18,19 @@ public class MqttConsumerConfig {
 
     @Value("${spring.mqtt.password}")
     private String password;
- 
+
     @Value("${spring.mqtt.url}")
     private String hostUrl;
 
     //    由于clientId不能相同,所以这里直接复制,不使用配置文件里面的配置了
 //    @Value("${spring.mqtt.client.id}")
     public String clientId = "Consumer";
- 
+
     @Value("${spring.mqtt.default.topic}")
     private String defaultTopic;
     @Value("${spring.mqtt.default.qos}")
     private String qos;
- 
+
     /**
      * 客户端对象
      */
@@ -62,12 +62,12 @@ public class MqttConsumerConfig {
             options.setPassword(password.toCharArray());
             //设置超时时间，单位为秒
             options.setConnectionTimeout(100);
- 
+
             //设置心跳时间 单位为秒，表示服务器每隔1.5*20秒的时间向客户端发送心跳判断客户端是否在线
             options.setKeepAliveInterval(20);
             //设置遗嘱消息的话题，若客户端和服务器之间的连接意外断开，服务器将发布客户端的遗嘱信息
             options.setWill("willTopic",(clientId + "与服务器断开连接").getBytes(),0,false);
- 
+
             //设置回调
             client.setCallback(new MqttConsumerCallBack());
             client.connect(options);
